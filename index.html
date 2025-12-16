@@ -3,8 +3,25 @@
     <head>
         <meta charset="utf-8">
         <title>Rock Paper Scissors</title>
+
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
+        <div class="container">
+            <div class="board">
+                <div class="computer-scoreboard">Computer: <span class="computer-score">0</span></div>
+                <div class="hand-board">
+                    <span class="computer-hand hidden"></span>
+                    <span class="human-hand hidden"></span>
+                </div>
+                <div class="human-scoreboard">Human: <span class="human-score">0</span></div>
+            </div>
+            <div class="buttons">
+                <button type="button">Rock</button>
+                <button type="button">Paper</button>
+                <button type="button">Scissors</button>
+            </div>
+        </div>
         <script src="./script.js"></script>
     </body>
 </html>

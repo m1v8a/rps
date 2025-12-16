@@ -1,12 +1,18 @@
-function computerChoice() {
+const humanScoreNode = document.querySelector(".human-score");
+const computerScoreNode = document.querySelector(".computer-score");
+const computerHand = document.querySelector(".computer-hand");
+const humanHand = document.querySelector(".human-hand");
+const buttonsCont = document.querySelector(".buttons");
+
+function getComputerChoice() {
     const rnd = Math.floor(Math.random() * 3);
     switch(rnd) {
         case 0:
-            return "rock";
+            return "Rock";
         case 1:
-            return "paper";
+            return "Paper";
         case 2:
-            return "scissors"
+            return "Scissors"
     }
 }
 
@@ -17,36 +23,49 @@ function getHumanChoice() {
 
 
 
-
 function playGame() {
     const ROUNDS = 5;
 
     let humanScore = 0;
     let computerScore = 0;
 
+    
+    // gets both human and computer choice and display it on the screen then play a single round
+    buttonsCont.addEventListener("click" , function chooseHand(e) {
+        const handButton = e.target;
+        if(handButton.type === "button") {
+            const humanChoice = humanHand.textContent;
+            const computerChoice = getComputerChoice();
 
-    for(let i = 0; i < ROUNDS; i++) {
-        const humanSelection = getHumanChoice();
-        const computerSelection = computerChoice();
+            humanHand.textContent = handButton.textContent;
+            computerHand.textContent = computerChoice;
+            humanHand.classList.remove("hidden");
+            computerHand.classList.remove("hidden");
+            
+            const roundWinner = playRound(humanChoice, computerChoice);
 
-        const winner = playRound(humanSelection, computerSelection);
+            if(roundWinner === "human") {
+                humanHand.classList.add("winner");
+                humanHand.classList.remove("loser");
+                computerHand.classList.add("loser");
+                computerHand.classList.remove("winner")
+            } else {
+                humanHand.classList.add("loser");
+                humanHand.classList.remove("winner");
+                computerHand.classList.add("winner");
+                computerHand.classList.remove("loser")
+            }
 
-        if(winner === "human" || winner === "computer") {
-            console.log(`${winner.toUpperCase()} wins this round!`);
-        } else if(winner === "draw") {
-            console.log("DRAW!!");
-        } 
-
-        console.log(`Human: ${humanSelection} - Computer ${computerSelection}`)
-        console.log(`Human: ${humanScore} - Computer: ${computerScore}`);
-    }
+            humanScoreNode.textContent = humanScore;
+            computerScoreNode.textContent = computerScore;
+        }
+    })
 
     // -----
-
     function playRound(humanChoice, computerChoice) {
         let winner = "";
         if(humanChoice.toLowerCase() === "rock") {
-            switch(computerChoice) {
+            switch(computerChoice.toLowerCase()) {
                 case "rock":
                     winner = "draw";
                     break;
@@ -58,7 +77,7 @@ function playGame() {
                     break;
             }
         } else if(humanChoice.toLowerCase() === "paper") {
-            switch(computerChoice) {
+            switch(computerChoice.toLowerCase()) {
                 case "rock":
                     winner = "human";
                     break;
@@ -70,7 +89,7 @@ function playGame() {
                     break
             }
         } else if(humanChoice.toLowerCase() === "scissors") {
-            switch(computerChoice) {
+            switch(computerChoice.toLowerCase()) {
                 case "rock":
                     winner = "human";
                     break;
